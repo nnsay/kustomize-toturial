@@ -1,0 +1,24 @@
+# 以下两个header可以省略
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# setting the same namespace for all Resources
+namespace: tutorial
+namePrefix: dev-
+# adding the same set of labels
+commonLabels:
+  usage: tutorial
+# adding the same set of annotations
+commonAnnotations:
+  auth: Jimmy Wang
+resources:
+  - base
+  - configmap.yaml
+secretGenerator:
+  - name: secret-literal
+    literals:
+      - username=admin
+      - password=secret
+  - name: secret-file
+    files:
+      - password.txt

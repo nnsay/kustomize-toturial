@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: common-config
+data:
+  host: redis.nnsay.cn
+  user: root
+  pass: "123456"

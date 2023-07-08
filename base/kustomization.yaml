@@ -1,0 +1,8 @@
+# 以下两个header可以省略
+# apiVersion: kustomize.config.k8s.io/v1beta1
+# kind: Kustomization
+resources:
+  - deployment.yaml
+images:
+  - name: docker.io/nnsay/rest
+    newTag: latest
