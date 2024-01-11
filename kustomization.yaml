@@ -6,14 +6,17 @@ kind: Kustomization
 namespace: tutorial
 namePrefix: dev-
 # adding the same set of labels
-commonLabels:
-  usage: tutorial
+# commonLabels:
+#   usage: tutorial
 # adding the same set of annotations
 commonAnnotations:
   auth: Jimmy Wang
 resources:
-  - base
-  - configmap.yaml
+  - namespace.yaml
+  # - base
+  # - configmap.yaml
+  ### knative tutorial ###
+  - knative
 secretGenerator:
   - name: secret-literal
     literals:

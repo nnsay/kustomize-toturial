@@ -1,0 +1,6 @@
+# kind: Kustomization
+resources:
+  - serving.yaml
+images:
+  - name: docker.io/nnsay/rest
+    newTag: latest
