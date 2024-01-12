@@ -19,3 +19,7 @@ spec:
           env:
             - name: TARGET
               value: "World"
+          readinessProbe:
+            httpGet:
+              path: /test
+            initialDelaySeconds: 3

@@ -79,6 +79,9 @@ k apply -k .
 k get ksvc
 NAME          URL                                              LATESTCREATED       LATESTREADY         READY   REASON
 dev-restapi   http://dev-restapi.tutorial.127.0.0.1.sslip.io   dev-restapi-00004   dev-restapi-00004   True
+# 测试
+curl -s http://dev-restapi.tutorial.127.0.0.1.sslip.io/test
+{"color":"yellow","message":"This is a Test","notify":"false","message_format":"text"}
 ```
 
 注意: 即使是本地单节点, serving 的镜像也不能是本地的否则报错:
@@ -89,3 +92,19 @@ Revision "dev-restapi-00001" failed with message: Unable to fetch image "local/r
 ```
 
 注意: .sslip.io 后缀是因为配置 DNS 使用了 Magic DNS(sslip.io)
+
+也可以通过网关访问:
+
+```bash
+k get services -n kourier-system
+NAME               TYPE           CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE
+kourier            LoadBalancer   10.103.163.247   localhost     80:32715/TCP,443:32421/TCP   25h
+kourier-internal   ClusterIP      10.102.216.10    <none>        80/TCP,443/TCP               25h
+```
+
+有了 kourier 网关地址, 也可以通过 Header+IP 访问服务:
+
+```bash
+curl -s -H "Host: dev-restapi.tutorial.127.0.0.1.sslip.io" http://127.0.0.1/test
+{"color":"yellow","message":"This is a Test","notify":"false","message_format":"text"}
+```
