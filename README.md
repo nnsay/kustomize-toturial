@@ -135,3 +135,9 @@ skaffold build --file-output=tags.json
 skaffold render --build-artifacts=tags.json
 skaffold deploy --build-artifacts=tags.json
 ```
+
+- 构建和部署
+
+```bash
+skaffold build -q | skaffold deploy --build-artifacts -
+```
