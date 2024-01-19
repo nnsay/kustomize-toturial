@@ -1,0 +1,19 @@
+apiVersion: skaffold/v4beta9
+kind: Config
+metadata:
+  name: kustomize-tutorial
+build:
+  artifacts:
+    - image: docker.io/nnsay/rest-nodejs
+      context: app
+  local: { push: true }
+manifests:
+  kustomize:
+    paths:
+      - .
+profiles:
+  - name: knative
+    manifests:
+      kustomize:
+        paths:
+          - knative

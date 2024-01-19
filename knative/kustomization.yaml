@@ -1,6 +1,9 @@
 # kind: Kustomization
 resources:
   - serving.yaml
+  - serving-nodejs.yaml
 images:
   - name: docker.io/nnsay/rest
+    newTag: latest
+  - name: docker.io/nnsay/rest-nodejs
     newTag: latest

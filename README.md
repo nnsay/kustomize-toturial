@@ -108,3 +108,30 @@ kourier-internal   ClusterIP      10.102.216.10    <none>        80/TCP,443/TCP 
 curl -s -H "Host: dev-restapi.tutorial.127.0.0.1.sslip.io" http://127.0.0.1/test
 {"color":"yellow","message":"This is a Test","notify":"false","message_format":"text"}
 ```
+
+# 5. Skaffold 集成
+
+- 安装:
+
+```bash
+brew install skaffold
+```
+
+- 初始化
+
+```bash
+skaffold init
+```
+
+- 构建
+
+```bash
+skaffold build --file-output=tags.json
+```
+
+- 部署
+
+```bash
+skaffold render --build-artifacts=tags.json
+skaffold deploy --build-artifacts=tags.json
+```
