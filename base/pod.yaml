@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: debug
+  labels:
+    name: debug
+spec:
+  containers:
+    - name: debug
+      image: ubuntu:jammy
+      tty: true
+      command: [sh]
+      resources:
+        limits:
+          memory: "128Mi"
+          cpu: "500m"

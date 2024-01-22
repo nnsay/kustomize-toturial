@@ -36,19 +36,35 @@ k apply -f knative/serving-core.yaml
 
 ## 3.2 安装网络层
 
-```bash
-# Install a networking layer
-# Install the Knative Kourier controller by running the command
-k apply -f knative/kourier.yaml
-# Configure Knative Serving to use Kourier by default by running the command
-k patch configmap/config-network \
-  --namespace knative-serving \
-  --type merge \
-  --patch '{"data":{"ingress-class":"kourier.ingress.networking.knative.dev"}}'
+- kourier
 
-# Fetch the External IP address or CNAME by running the command
-kubectl --namespace kourier-system get service kourier
-```
+  ```bash
+  # Install a networking layer
+  # Install the Knative Kourier controller by running the command
+  k apply -f knative/kourier.yaml
+  # Configure Knative Serving to use Kourier by default by running the command
+  k patch configmap/config-network \
+    --namespace knative-serving \
+    --type merge \
+    --patch '{"data":{"ingress-class":"kourier.ingress.networking.knative.dev"}}'
+
+  # Fetch the External IP address or CNAME by running the command
+  kubectl --namespace kourier-system get service kourier
+  ```
+
+- lstio
+
+  ```bash
+  # Install Istio
+  k apply -f knative/istio.yaml
+  # Install the Knative Istio controller
+  k apply -f knative/net-istio.yaml
+
+  # Fetch the External IP address or CNAME
+  kubectl --namespace istio-system get service istio-ingressgateway
+  ```
+
+> [!NOTE] 建议使用 lstio, 因为 kourier 不支持 websocket, 具体差异可以查看[这里](https://help.aliyun.com/zh/ack/ack-managed-and-ack-dedicated/user-guide/comparison-between-kourier-and-alb-ingresses)
 
 ## 3.3 验证安装
 
