@@ -15,6 +15,7 @@ resources:
   - namespace.yaml
   # - base
   # - configmap.yaml
+  # infra
   ### knative tutorial ###
   - knative
 secretGenerator:
