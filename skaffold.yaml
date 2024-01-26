@@ -6,7 +6,17 @@ build:
   artifacts:
     - image: docker.io/nnsay/rest-nodejs
       context: app
-  local: { push: true }
+      docker:
+        dockerfile: Dockerfile
+        # noCache: true
+        cliFlags:
+          - --no-cache
+  local:
+    push: true
+    useDockerCLI: true
+  # tagPolicy:
+  #   gitCommit:
+  #     prefix: dev
 manifests:
   kustomize:
     paths:

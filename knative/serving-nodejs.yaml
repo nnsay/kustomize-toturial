@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: restnodeapi
   labels:
-    networking.knative.dev/visibility: cluster-local # 设置service私有
+    # networking.knative.dev/visibility: cluster-local # 设置service私有
 spec:
   template:
     metadata:

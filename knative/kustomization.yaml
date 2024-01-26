@@ -1,6 +1,6 @@
 # kind: Kustomization
 resources:
-  - serving.yaml
+  # - serving.yaml
   - serving-nodejs.yaml
 images:
   - name: docker.io/nnsay/rest

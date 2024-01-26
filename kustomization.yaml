@@ -12,7 +12,7 @@ namePrefix: dev-
 commonAnnotations:
   auth: Jimmy Wang
 resources:
-  - namespace.yaml
+  # - namespace.yaml
   # - base
   # - configmap.yaml
   # infra

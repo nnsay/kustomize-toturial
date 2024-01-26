@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nodejsdebug
+  labels:
+    name: nodejsdebug
+spec:
+  containers:
+    - name: nodejsdebug
+      image: node:18-alpine
+      tty: true
+      command: [sh]
+      resources:
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
