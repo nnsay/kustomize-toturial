@@ -3,6 +3,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const k8s = require("@kubernetes/client-node");
+const events = require("events");
 
 const kc = new k8s.KubeConfig();
 // const apiHost = "https://127.0.0.1:6443";
@@ -29,6 +30,56 @@ users:
     client-key-data: LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlFcEFJQkFBS0NBUUVBekxmK2YxeXo1Q3dMMUJVY2g5ZklVVzlFdldsREwyZ09QcWVoYjAxVnA1SnhuaU15CkdOSnV1MzY3UVhyZ2Rzb1dralUrMUY3c1N1eTRuZU5rQnJCR3VMMVJBOUx0bzlWZDJka3h6USsrZy9ZamZwWVYKOVV6eFhYc1pETGFoRmI3emFpNWptcmhtSHdDbWkzRjdub29Db055c3k3SWZJd3BZaktqRHFkalpMd0gzaWFHSApGRVk4bEIvd1V2TnhqZ096bTR1U0o2NXFGT2Q1N0lvZTJKOWhmNUxJM3RkemxkTVk1cGt3Y3lPNlFPdWUycDRBCng3ZVRGNVlwZmducUVCamdkZEE1dThFZW9XQ1d2TjNKRzRuM2t5YTkveWppRmVYQ0MzeTVtU0M4NmZhWlFBVngKalgyZ1k1Mk1CNGVqRCtrRDZwaGErNEN1cG9YTXV3dHFNSWtKNlFJREFRQUJBb0lCQUVibUhneXI1VjFMWjlsTwphbkFkYWpIUjBFT3M5ZWl3SitiSkZWNi9zTDkxTjBZbU9FNWlhcGtpdmVWaWtlUngvcmtxR1pWaFBvS0FVenZUCkthd3JWb0xhaGZsR0Rxa2oxdm9BZjMvZVNRUFl0ZGc4VUdTQS9rSjZ4R1VqeHN3S01yRCtXZDZXcUQ5cWNVTnYKelBsT0lMVG5XQ3kvaG9zVEpUR3ByUUhncU83ZkorcWxadzY5Y1BReko4N0ZjellMZGFuWURWZUErZmJoTGp2WApxUE1vcVg5SzJ6OUNIc0lPWkNTbUQwT1NFckxWUVgvVElwOWtiMGlncUVleGR1UHRrOStZZnJjMHA5Z0JsZ0JmCjdvOTFIWmpZTGRRZE9wOFpwalZraU5NRzg0UW9QKzVaS25nc3pjb3ZYeENINFZXb1BqZE43Tzd6M2FOTzZTVVIKaHp2RXRPVUNnWUVBNlo1dzVISXNjY2VZU20vNkxTY3I1U3JRblcvdXJVeXhFbmcxSm0wUlc3WUMyZFEvS0ZGbApnc0hOQXVtYi83Yk9QeHVSYVhwZ3lGS3I0R0ZFSENXaU9PY01CRys3K3JLVFQ4MU50WDhxUUlYWnM3ZUNKd05HClN0bWUybng4aHNJTHRmQ0lPeHBJVWtzcldMOEg4bVY1RTNrc1B2UEFXTnBIUU9jSHFJenhOTE1DZ1lFQTRGVEUKOGs1K3VHZ3ErcjFTU0F6eERWbndSL05ncVVoQytweVF2WU1INHBNakVBSTR3ckFIUFFjWS9UQXZiQktJK042UgpJRE54RmszYXZvQWg2ZDlFK1FCbUFKVUpTbDFBbzR4ZFVsenBGT2U0eFJHSXJOVzhWaC9NODFjUnYwN0EvRURCCjh2bWVCUmtINGFXUUNQRE04bzZ0c2IvWmpHTG5RTExuTks2RjdQTUNnWUVBdUY2RFI3YlhYb0FmcnZkS1lDSWUKNFQvMTNabjlxaVR4UmRzNlR2WWFrZDlGeHJWYmxxME9TTEE3NUVXTENMY3pjOWlFM05KbzJROXRkNm9yZjI4dgo1R3ByTUlFaHdFcjRPUzJVVzExZGNnaHdkQVdxSUxIVDRyUjJTb1dlSFJlOCtEdzR0elFaeVdCcmVDRmkyeWk3CjhlTmFTT0JEZDV2a1NkTktWdm5NVGtNQ2dZRUF4dHhlZWkzN1I1MlAvQlk0Q29idWFOZUJtVWEyT1ZwRmhjT2sKeTFxTWN0M2NCeVR4RENUZlJjbzA3THo2VE9OaGFMeGtDaGVQK0NXcjg1UENmSC9mdEp3VjBBNU4zZzRzYnM3UApLMlFSZXVhdmRJTEdsZkFpdEhZY1NOcTJjTkJ2WXk1RXdBOW5kVDFyTHl5Rk1tZkVSb0VVbUsxcFBIbXdaam94Cm14SGF4dUVDZ1lCMnJFQ29vYWI4TjFVdkh5QmM3WDFzREpLY29HNFdWNVhLQTl4cFNNbWc4Zm5FYVRMSUJMazAKNUhIRy9ONy90bitldWRyZlluQWdWK3ZkeFN4WCsyb084NFE2dnlmZ3FlNjVsZUY2RUduNEN5RE0yVVZFaGJ5MQpwc2RnSFpQOXo0VTBLYlZFK3hJRGgxOEZTOHBEaGVGVW9XWGVLL2ZjZkZxc0hJZTFLb1ZwNXc9PQotLS0tLUVORCBSU0EgUFJJVkFURSBLRVktLS0tLQo=
 `);
 
+const s3DeleteHandler = {
+  event: "s3-delete",
+  handler: async () => {
+    const sleep = (second) => {
+      return new Promise((resolve) => {
+        setTimeout(() => resolve(Date.now()), 1000 * second);
+      });
+    };
+    const timestamp = await sleep(600);
+    console.log("s3 delete handler result: ", timestamp);
+  },
+};
+class EventHandler extends events.EventEmitter {
+  constructor() {
+    super();
+    this.setMaxListeners(1000);
+    this.addHandler(s3DeleteHandler.event, s3DeleteHandler.handler);
+  }
+
+  addHandler(eventName, handler) {
+    console.log(`add handler ${eventName}`);
+    const eventNames = this.eventNames();
+    if (eventNames.includes(eventName)) {
+      console.warn(`the ${eventName} handler has be added!`);
+    }
+    this.addListener(eventName, () => {
+      handler()
+        .then(() => {
+          console.log(`${eventName} done`);
+        })
+        .catch((err) => {
+          console.log(`${eventName} catch error: ${JSON.stringify(err)}`);
+        });
+    });
+  }
+
+  removeHandler(eventName) {
+    this.removeAllListeners(eventName);
+  }
+
+  trigger(eventName) {
+    console.log(`trigger event ${eventName}`);
+    this.emit(eventName);
+  }
+
+  getEventCount() {
+    this.listenerCount;
+  }
+}
+const eh = new EventHandler();
 const app = express();
 const port = 3000;
 app.use(bodyParser.json());
@@ -68,6 +119,10 @@ app.post("/pod", async (req, res) => {
   const batchV1Api = kc.makeApiClient(k8s.BatchV1Api);
   const result = await batchV1Api.createNamespacedJob("tutorial", job);
   res.json(result);
+});
+app.get("/trigger", (req, res) => {
+  eh.trigger(s3DeleteHandler.event);
+  res.send("ok");
 });
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!!`));
