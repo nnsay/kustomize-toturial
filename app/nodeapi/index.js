@@ -126,7 +126,8 @@ app.post("/", async (req, res) => {
   const receivedEvent = HTTP.toEvent({ headers: req.headers, body: req.body });
   console.log(receivedEvent);
   console.log("开始耗时任务");
-  await sleep(1);
+  const second = req.body.data.second ? +req.body.data.second : 100;
+  await sleep(second);
   console.log("结束耗时任务");
 });
 
