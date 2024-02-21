@@ -38,7 +38,7 @@ const sleep = (second) => {
 const s3DeleteHandler = {
   event: "s3-delete",
   handler: async () => {
-    const timestamp = await sleep(600);
+    const timestamp = await sleep(300);
     console.log("s3 delete handler result: ", timestamp);
   },
 };
@@ -119,6 +119,11 @@ app.post("/pod", async (req, res) => {
   const batchV1Api = kc.makeApiClient(k8s.BatchV1Api);
   const result = await batchV1Api.createNamespacedJob("tutorial", job);
   res.json(result);
+});
+app.get("/trigger", async (req, res) => {
+  console.log("trigger");
+  eh.emit(s3DeleteHandler.event);
+  res.end("ok");
 });
 app.post("/", async (req, res) => {
   console.log("receivedEvent");
