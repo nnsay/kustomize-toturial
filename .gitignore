@@ -1,2 +1,2 @@
-app/node_modules
-.venv
+app/nodeapi/node_modules
+app/event/.venv
