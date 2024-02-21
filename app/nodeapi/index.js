@@ -122,7 +122,7 @@ app.post("/pod", async (req, res) => {
 });
 app.post("/", async (req, res) => {
   console.log("receivedEvent");
-  res.end();
+  res.json({ taskId: Date.now() });
   const receivedEvent = HTTP.toEvent({ headers: req.headers, body: req.body });
   console.log(receivedEvent);
   console.log("开始耗时任务");
