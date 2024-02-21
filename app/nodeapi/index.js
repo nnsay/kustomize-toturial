@@ -127,6 +127,7 @@ app.post("/", async (req, res) => {
   console.log(receivedEvent);
   console.log("开始耗时任务");
   const second = req.body.data.second ? +req.body.data.second : 100;
+  console.log({ second });
   await sleep(second);
   console.log("结束耗时任务");
 });
