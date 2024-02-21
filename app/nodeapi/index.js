@@ -123,6 +123,7 @@ app.post("/pod", async (req, res) => {
 });
 app.post("/", (req, res) => {
   console.log("receivedEvent");
+  res.end();
   const receivedEvent = HTTP.toEvent({ headers: req.headers, body: req.body });
   console.log(receivedEvent);
 });

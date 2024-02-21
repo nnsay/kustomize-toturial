@@ -1,4 +1,5 @@
-const { httpTransport, emitterFor, CloudEvent } = require("cloudevents");
+const { httpTransport, emitterFor, CloudEvent, HTTP } = require("cloudevents");
+const axios = require("axios").default;
 
 // Create an emitter to send events to a receiver
 const emit = emitterFor(
@@ -14,7 +15,7 @@ const ce = new CloudEvent({
   },
 });
 
-// Send it to the endpoint - encoded as HTTP binary by default
+// way1: Send it to the endpoint - encoded as HTTP binary by default
 emit(ce)
   .then((responseSink) => {
     console.log(`Sent event: ${JSON.stringify(ce, null, 2)}`);
@@ -31,3 +32,11 @@ emit(ce)
     );
   })
   .catch(console.error);
+// way2: axios
+// const message = HTTP.binary(ce);
+// axios({
+//   method: "post",
+//   url: "http://dev-restnodeapi.tutorial.127.0.0.1.sslip.io",
+//   data: message.body,
+//   headers: message.headers,
+// });
