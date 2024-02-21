@@ -3,6 +3,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const k8s = require("@kubernetes/client-node");
+const events = require("events");
 const { HTTP } = require("cloudevents");
 
 const kc = new k8s.KubeConfig();
