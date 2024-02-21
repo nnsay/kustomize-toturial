@@ -122,12 +122,12 @@ app.post("/pod", async (req, res) => {
 });
 app.post("/", async (req, res) => {
   console.log("receivedEvent");
-  res.json({ taskId: Date.now() });
+  res.end();
   const receivedEvent = HTTP.toEvent({ headers: req.headers, body: req.body });
   console.log(receivedEvent);
   console.log("开始耗时任务");
-  const body = JSON.parse(req.body);
-  const second = body.data.second ? +body.data.second : 100;
+  const data = req.body;
+  const second = data.second ? +data.second : 100;
   console.log({ second });
   await sleep(second);
   console.log("结束耗时任务");
