@@ -5,7 +5,7 @@ metadata:
 build:
   artifacts:
     - image: docker.io/nnsay/rest-nodejs
-      context: app
+      context: app/nodeapi
       docker:
         dockerfile: Dockerfile
         # noCache: true
