@@ -9,11 +9,11 @@ build:
       docker:
         dockerfile: Dockerfile
         # noCache: true
-        cliFlags:
-          - --no-cache
+        # cliFlags:
+        #   - --no-cache
   local:
     push: true
-    useDockerCLI: true
+    # useDockerCLI: true
   # tagPolicy:
   #   gitCommit:
   #     prefix: dev
