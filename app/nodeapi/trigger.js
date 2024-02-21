@@ -12,6 +12,7 @@ const ce = new CloudEvent({
   source: "source/localhost",
   data: {
     hello: "world",
+    second: 300,
   },
 });
 
