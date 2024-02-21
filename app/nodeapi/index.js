@@ -120,7 +120,8 @@ app.post("/pod", async (req, res) => {
   const result = await batchV1Api.createNamespacedJob("tutorial", job);
   res.json(result);
 });
-app.post("/trigger", (req, res) => {
+app.post("", (req, res) => {
+  console.log("receivedEvent");
   const receivedEvent = HTTP.toEvent({ headers: req.headers, body: req.body });
   console.log(receivedEvent);
 });
