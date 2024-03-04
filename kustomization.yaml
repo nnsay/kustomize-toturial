@@ -4,7 +4,7 @@ kind: Kustomization
 
 # setting the same namespace for all Resources
 namespace: tutorial
-namePrefix: dev-
+# namePrefix: dev-
 # adding the same set of labels
 # commonLabels:
 #   usage: tutorial
