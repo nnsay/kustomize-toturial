@@ -2,6 +2,8 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: restapi
+  labels:
+    # networking.knative.dev/visibility: cluster-local # 设置service私有
 spec:
   template:
     metadata:
@@ -13,6 +15,7 @@ spec:
       containerConcurrency: 10 # ContainerConcurrency specifies the maximum allowed in-flight (concurrent) requests per container of the Revision
       timeoutSeconds: 300 # TimeoutSeconds is the maximum duration in seconds that the request routing layer will wait for a request delivered to a container to begin replying (send network traffic)
       containers:
+        # debug image: registry.cn-hangzhou.aliyuncs.com/knative-sample/helloworld-go:73fbdd56
         - image: docker.io/nnsay/rest:latest
           ports:
             - containerPort: 8080
